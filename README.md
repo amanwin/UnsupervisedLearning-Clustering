@@ -114,15 +114,15 @@ Note that the initial choice of cluster centers(yellow and red one) is completel
 
 ![title](img/k-means1.png)
 
-![title](img/k-means2.jpg)
+![title](img/k-means2.JPG)
 
 Now we can see we have set of points allocated to the yellow centroid and a set of points allocated to the red centroid. So in effect we have two clusters now. This set is a assigment step where each point is assigned to a cluster.
 
-![title](img/k-means3.jpg)
+![title](img/k-means3.JPG)
 
 The next step is to recompute the center of each of these clusters which will simply be the mean of individual points in each of the clusters. Then we will get our new cluster centers. This is the optimasation step.
 
-![title](img/k-means-optimsation.jpg)
+![title](img/k-means-optimsation.JPG)
 
 Now again we will go to assignment step and will assign each datapoint to the nearest cluster center using the same method as discussed earlier.
 
@@ -179,7 +179,7 @@ If we carefully look into the first step in which we are assigning each step to 
 
 ![title](img/k-means-optimsation-step.png)
 
-![title](img/optimisation-step1.JPG)
+![title](img/k-means-optimsation1.JPG)
 
 In the next segment, we will look that the K-Means cost function is a non-convex function, which means the coordinate descent is not guaranteed to converge to the global minimum and the cost function can converge to local minima. Choosing the initial value of K centroids can affect the K-Means algorithm and its final results.
 
