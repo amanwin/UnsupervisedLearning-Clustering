@@ -508,3 +508,125 @@ For the purpose of creating the above visualisation, we have cleaned the data to
 
 [Cleaned File](dataset/Main.xlsx)
 
+### Other Forms of Clustering
+
+#### Introduction
+Welcome to the session on 'Other forms of Clustering'. In the previous sessions, you got an in-depth understanding of what the K-Means algorithm is? and how to execute the K-Means algorithm in Python. You also looked at "Hierarchical Clustering", in which you learned about dendrogram and how to interpret them.
+
+### K-Mode Clustering
+In the previous session we learned in detail about the K-Means algorithm, we looked at the two steps, i.e. assignment step and the optimisation step in which the K-Means algorithm works iteratively. 
+
+The K-Means clustering algorithm is undoubtedly one of the most widely used partitional algorithms for numerical data or continuous data, but K-Means can't handle categorical data, and the reason is that of the difference in the dissimilarity measure the K-Means uses.
+
+The K-modes clustering algorithm is based on K-means paradigm but removes the numeric data limitation while preserving its efficiency.
+
+![title](img/k-mode.png)
+
+What do you think about a data set having both numerical and categorical values? Will the above methods do the job? Here comes the K-Prototype. That’s the simple combination of K-Means and K-Modes in clustering mixed attributes.
+
+For K-Prototype clustering, we combine K-means and K-Mode to handle both continuous and categorical data. For K-Prototype the distance function is as follows,
+
+![title](img/k-prototyping.JPG)
+
+Where gamma is the weighting factor that determines the relative importance of numerical categorical attributes.
+
+In the next section, we will be looking at K-Mode and K-prototype in Python. Let's move to the next segment.
+
+### K-Mode in Python
+We have seen K-Means in detail and also it's Python implementation, In this section, we will be looking at K-Mode implementation in Python.
+
+For K-Mode in python, we will be required to install an additional library. You may download the Kmode library using the steps mentioned in this document(https://pypi.org/project/kmodes/).
+
+Remember that to use KModes in Anaconda, you need to install KModes using the conda installer in Anaconda Prompt.
+
+Download the data from below used for Python Lab:
+
+[Bank Marketing DataSet](dataset/bankmarketing.csv)
+
+Download the Python code used in the session from below:
+
+![title](dataset/K-Mode+Bank+Marketing.ipynb)
+
+We prepared the data for K-Mode clustering. To summarise the steps,
+1. We started with importing libraries including Kmodes library that we will be using to conduct Kmodes in Python
+
+![title](img/k-modes1.JPG)
+
+2. Next, we chose the categorical columns and binned age column.
+
+bank_cust = bank[['age','job', 'marital', 'education', 'default', 'housing', 'loan','contact','month','day_of_week','poutcome']]
+
+bank_cust['age_bin'] = pd.cut(bank_cust['age'], [0, 20, 30, 40, 50, 60, 70, 80, 90, 100], 
+                              labels=['0-20', '20-30', '30-40', '40-50','50-60','60-70','70-80', '80-90','90-100'])
+
+3. We encoded the categories to 0 to n using label encoder.
+
+![title](img/labelencoder.JPG)
+
+Now let's perform KModes in that data we have prepared.
+
+Kmodes can be initialised using two main methods namely "Huang" and "Cao". 
+
+To read in detail about the "Huang" initialisation technique you may read this document(https://pdfs.semanticscholar.org/d42b/b5ad2d03be6d8fefa63d25d02c0711d19728.pdf). You may also read about "Cao" initialisation technique here (http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.474.8181&rep=rep1&type=pdf).
+
+### K-Prototype in Python
+K-Prototype clustering is an algorithm to combine K-Means and K-Modes. K-Prototype can handle both continuous and categorical data to create clusters.
+
+For K-Prototype Python Lab we will be using RFMTC marketing model (a modified version of RFM). The data contains 748 donor data, each one included R (Recency - months since last donation), F (Frequency - total number of donation), M (Monetary - total blood donated in c.c.), T (Time - months since first donation), and a binary variable representing whether he/she donated blood in March 2007 (1 stand for donating blood; 0 stands for not donating blood).
+
+Download the Python code used in the session from below:
+
+[K-prototype in Python](dataset/K-Prototype+clustering.ipynb)
+
+K-Prototype clustering uses "Huang" and "cao" initialisation, you may read more about this in the given document (https://www.researchgate.net/publication/282688490_A_novel_cluster_center_initialization_method_for_the_k-prototypes_algorithms_using_centrality_and_distance).
+
+### DB Scan Clustering
+DBSCAN is a density-based clustering algorithm that divides a data set into subgroups of high-density regions. DBSCAN groups together point that are close to each other based on a distance measurement (usually Euclidean distance) and a minimum number of points. It also marks as outliers the points that are in low-density regions.
+
+**DBScan Parameters** <br/>
+DBSCAN algorithm requires 2 parameters:
+1. Epsilon or EPS
+2. MinPoints or MinSamples.
+
+**EPS** <br/>
+EPS is a distance parameter that defines the radius to search for nearby neighbours. We can imagine each data point having a circle with radius EPS drawn around it. 
+
+The value of EPS taken to cluster the data has a significant impact on the results. If the value of EPS is considered too small, decidedly fewer data points will be considered in one cluster, and a large part of the data will not be clustered. The un-clustered data points will be considered as outliers because they don't satisfy the number of points to create a dense region. If the EPS value is chosen to be very high, no real clusters will be formed as all of them will merge in the same cluster. The eps should be chosen based on the distance of the dataset (we can use a k-distance graph to find it), but in general small eps values are preferable.
+
+**Min Samples**
+Min Samples or Min Points are the number of minimum points to form a dense region or cluster. For example, if we set the min_samples as 5, we need at least 5 points to form a dense cluster. 
+
+Minimum points can be selected from some dimensions (D) in the data set, as a general rule min points >=D+1. 
+
+The DBSCAN algorithm is used to find associations and structures in the data that are usually hard to find manually.
+
+Use this link (https://www.naftaliharris.com/blog/visualizing-dbscan-clustering/) to visualise the DBSCAN algorithm in action
+
+**Additional Resources** <br/>
+Application of DBSCAN at Netflix: Read Here (https://netflixtechblog.com/tracking-down-the-villains-outlier-detection-at-netflix-40360b31732?gi=d75904f49746)
+
+Application of DBSCAN in Geolocated data: Read Here (https://www.oreilly.com/ideas/clustering-geolocated-data-using-spark-and-dbscan)
+
+Original Paper on DBSCAN posted on KDD by Martin Ester: Read Here (https://www.aaai.org/Papers/KDD/1996/KDD96-037.pdf)
+
+[Bank Marketing DataSet](dataset/bankmarketing.csv)
+
+[Practice Solution](dataset/Practice+Question+K-Prototype.ipynb)
+
+### Gaussian Mixture Model
+
+![title](img/Gaussian.JPG)
+
+The limitations with hard clustering are that we tend to clusters even those data points in one of the clusters, even if the data point doesn't follow the clustering trend completely. Forex, If we want to cluster the set of customers into two groups say "High-Value Customers" and "Low-Value Customers", we will end up clustering the average value customers to any one of the clusters.
+
+So to overcome this issue, we have a concept of **Soft Clustering**.
+
+Soft Clustering: In soft clustering, the assignment of the data point to a cluster is based on the probability or likelihood of that data point to existing in that cluster. If we take the above example of clustering the customers into two clusters, we will be able to identify those customers who didn't fall in any one.
+
+For soft clustering, we have an algorithm called GMMs or Gaussian Mixture Models. GMM has two advantages over K-Means:
+
+GMM is a lot more flexible regarding cluster covariance.
+GMM model accommodates mixed membership.
+You may go through this link to understand GMMs in more detail and how it works. GMMs is an optional session, which you may go through based on your time and convenience. We strongly suggest you go through the algorithm as GMMs can be applied to applications like "Speech Recognition", "Image Clustering", "Financial Applications". 
+
+ 
