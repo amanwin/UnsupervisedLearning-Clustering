@@ -408,4 +408,103 @@ However, K means was just one of the clustering algorithm. In the next session, 
 
 [Cricket Clustering](dataset/Cricket.ipynb)
 
+## Hierarchical Clustering
+You will learn about another algorithm to achieve unsupervised clustering. This is called **Hierarchical Clustering**. Here, instead of pre-defining the number of clusters, you first have to visually describe the similarity or dissimilarity between the different data points and then decide the appropriate number of clusters on the basis of these similarities or dissimilarities.
+
+### Hierarchical Clustering Algorithm
+One of the major considerations in using the K-means algorithm is deciding the value of K beforehand. The hierarchical clustering algorithm does not have this restriction.
+
+The output of the hierarchical clustering algorithm is quite different from the K-mean algorithm as well. It results in an inverted tree-shaped structure, called the dendrogram. An example of a dendrogram is shown below.
+
+![title](img/dendrogram.JPG)
+
+Let's see how hierarchical clustering works.
+
+In the K-Means algorithm, you divided the data in the first step itself. In the subsequent steps, you refined our clusters to get the most optimal grouping. In hierarchical clustering, the data is not partitioned into a particular cluster in a single step. Instead, a series of partitions/merges take place, which may run from a single cluster containing all objects to n clusters that each contain a single object or vice-versa.
+
+This is very helpful since you don’t have to specify the number of clusters beforehand.
+
+Given a set of N items to be clustered, the steps in hierarchical clustering are:
+1. Calculate the NxN distance (similarity) matrix, which calculates the distance of each data point from the other
+2. Each item is first assigned to its own cluster, i.e. N clusters are formed
+3. The clusters which are closest to each other are merged to form a single cluster
+4. The same step of computing the distance and merging the closest clusters is repeated till all the points become part of a single cluster
+
+Thus, what you have at the end is the dendrogram, which shows you which data points group together in which cluster at what distance. You will learn more about interpreting the dendrogram in the next segment.
+
+### Interpreting the Dendrogram
+The result of the cluster analysis is shown by a dendrogram, which starts with all the data points as separate cluster and indicates at what level of dissimilarity any two clusters were joined.
+
+The y-axis of the dendrogram is some measure of the dissimilarity or distance at which clusters join.
+
+![title](img/dendrogram1.JPG)
+
+In the dendrogram shown above, samples 4 and 5 are the most similar and join to form the first cluster, followed by samples 1 and 10. The last two clusters to fuse together to form the final single cluster are 3-6 and 4-5-2-7-1-10-9-8. 
+
+Determining the number of groups in a cluster analysis is often the primary goal. Typically, one looks for natural groupings defined by long stems. Here, by observation, you can identify that there are 3 major groupings: 3-6, 4-5-2-7 and 1-10-9-8.
+
+You also saw that hierarchical clustering can proceed in 2 ways — agglomerative and divisive. If you start with n distinct clusters and iteratively reach to a point where you have only 1 cluster in the end, it is called agglomerative clustering. On the other hand, if you start with 1 big cluster and subsequently keep on partitioning this cluster to reach n clusters, each containing 1 element, it is called divisive clustering.
+
+![title](img/agglomerative-divisive.JPG)
+
+**Additional Reference**
+You can read more about divisive clustering here(https://nlp.stanford.edu/IR-book/html/htmledition/divisive-clustering-1.html) and here(http://luthuli.cs.uiuc.edu/~daf/courses/probcourse/notesclustering.pdf).
+
+### Types of Linkages
+In our example, we took the minimum of all the pairwise distances between the data points as the representative of the distance between 2 clusters. This measure of the distance is called single linkage. Apart from using the minimum, you can use other methods to compute the distance between the clusters.
+
+Let’s see once again the different types of linkages.
+1. **Single Linkage**: Here, the distance between 2 clusters is defined as the shortest distance between points in the two clusters
+2. **Complete Linkage**: Here, the distance between 2 clusters is defined as the maximum distance between any 2 points in the clusters
+3. **Average Linkage**: Here, the distance between 2 clusters is defined as the average distance between every point of one cluster to every other point of the other cluster.
+
+Average and Complete linkage methods give a well-separated dendrogram, whereas single linkage gives us dendrograms which are not very well separated. We generally want well separated clusters.
+
+You have to decide what type of linkage should be used by looking at the data. One convenient way to decide is to look at how the dendrogram looks. Usually, single linkage type will produce dendrograms which are not structured properly, whereas complete or average linkage will produce clusters which have a proper tree-like structure. You will see later what this means when you run the hierarchical clustering algorithm in Python.
+
+After we got the clusterIDs for each customer, we then appended the obtained ClusterIDs to the RFM data set, and analysed the characteristics of each cluster to derive the business insights from the different customer segments or clusters, in the same way as you did for the K-Means algorithm.
+
+Additional reading
+You can read more about the type of linkages here(http://www.saedsayad.com/clustering_hierarchical.htm), here(https://stats.stackexchange.com/questions/195446/choosing-the-right-linkage-method-for-hierarchical-clustering) and here(http://www.stat.cmu.edu/~ryantibs/datamining/lectures/05-clus2.pdf).
+
+Let's recall what you have learnt in this session so far. You learnt about another clustering technique called Hierarchical clustering. You saw how it is different from K-Means clustering. One major advantage is that you do not have to pre-define the number of clusters. However, since you compute the distance of each point from every other point, it is time-consuming and needs a lot of processing power.
+
+In the next segment, you will use the hierarchical clustering technique to actually make clusters using Python.
+
+### Cutting the Dendrogram & Analyzing the Clusters
+We will use the same online retail case study and data set that we used for the K-Means algorithm. For making the customer segments this time, we will use the hierarchical algorithm.
+
+We will start at the point where we are done with the data preparation and already have the RFM dataset which has been treated for missing values and outliers, and is also standardised.
+
+The hierarchical clustering involves 2 basic steps:
+1. Creating the dendrogram
+2. Cutting the dendrogram at an appropriate level
+
+![title](img/customer-analysis.JPG)
+
+### Industry Insights
+Now let's see the comparison between the K-Means algorithm and the Hierarchical clustering algorithm, before learning how to choose between the two based on your business problem.
+
+So, you learnt that whether you use k-means or hierarchical clustering algorithm depends on your hardware and the data that you are dealing with.
+
+Now, you will look at a good statistical hack to solve segmentation problems so that you get meaningful segments, where you will use both hierarchical and k-means algorithms to complement each other.
+
+Hierarchical clustering generally produces better clusters, but is more computationally intensive.
+
+These insights were really helpful. You looked at how these clustering methods can be used to complement each other. You also looked at the differences between these methods, and the cases where you would prefer one method over the other.
+
+### Let's have some fun
+You have learnt how about how to make clusters using the hierarchical clustering algorithm. Let's use that knowledge to play around with clusters. Again we will be using the example of education in Indian states.
+
+Given below is a data set on the education status of Indian states.
+
+[Indian Census Data](dataset/India.xlsx)
+
+You can download the data set and run the hierarchical algorithm on this. You can try to make the clusters on different attributes. 
+
+You can see the effect of various elements of the hierarchical clustering on the clusters formed.
+
+For the purpose of creating the above visualisation, we have cleaned the data to include only the 2 factors under consideration. You can download the file below.
+
+[Cleaned File](dataset/Main.xlsx)
 
